@@ -22,4 +22,5 @@ public class CellAddressTest {
             assertDoesNotThrow(() -> new CellAddress(1, 3));
         }
     }
+
 }

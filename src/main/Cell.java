@@ -1,2 +1,6 @@
-package main;public interface Cell {
+package main;
+
+public interface Cell {
+    boolean isAlive();
+    Cell nextGeneration(int aliveNeighbours);
 }
