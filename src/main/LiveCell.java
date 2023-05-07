@@ -10,6 +10,9 @@ public class LiveCell implements Cell{
     }
 
     public Cell nextGeneration(int aliveNeighbours){
+        if (aliveNeighbours < 2 || aliveNeighbours > 3){
+            return DeadCell.Instance;
+        }
         return this;
     }
 }
