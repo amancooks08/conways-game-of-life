@@ -49,7 +49,10 @@ public class Grid {
         return cells[0].length;
     }
 
-    private void put(Cell cell, int x, int y){
+    public void put(Cell cell, int x, int y) throws IllegalArgumentException{
+        if (x < 0 || y < 0 || x >= this.cells.length || y >= this.cells[0].length){
+            throw new IllegalArgumentException("Enter valid co-ordinates.");
+        }
         cells[x][y] = cell;
     }
 
@@ -76,5 +79,22 @@ public class Grid {
             }
         }
         return counter;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        for (int x = 0; x < cells.length; x++) {
+            for (int y = 0; y < cells[x].length; y++) {
+                if (cells[x][y].isAlive()) {
+                    buffer.append("*");
+                } else {
+                    buffer.append("O");
+                }
+                buffer.append("  ");
+            }
+            buffer.append("\n");
+        }
+        return buffer.toString();
     }
 }

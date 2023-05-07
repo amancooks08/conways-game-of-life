@@ -1,6 +1,7 @@
 package test;
 
 import main.Grid;
+import main.LiveCell;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +48,7 @@ class GridTest {
             Grid grid = new Grid(5, 6);
             grid.generateSeed();
 
-            assertEquals(deadGrid, grid);
+            assertNotEquals(grid, deadGrid);
         }
 
     }
@@ -56,7 +57,7 @@ class GridTest {
     class TestTickNewGeneration{
 
         @Test
-        public void expectDeadPopulationDoNotReproduce(){
+        public void expectDeadPopulationToNotReproduce(){
             Grid grid = new Grid(5, 6);
 
             Grid nextGeneration = grid.tickPopulation();
@@ -65,13 +66,44 @@ class GridTest {
         }
 
         @Test
-        public void expectSeedPopulationToReproduce(){
-            Grid grid = new Grid(5, 6);
-            grid.generateSeed();
+        public void expectPopulationDisplayed(){
+            Grid grid = new Grid(8, 8);
+            grid.put(LiveCell.Instance, 4, 3);
+            grid.put(LiveCell.Instance, 4, 4);
+            grid.put(LiveCell.Instance, 4, 5);
 
-            Grid nextGeneration = grid.tickPopulation();
+            Grid newGrid = grid.tickPopulation();
+            Grid expectedGrid = new Grid(8, 8);
+            expectedGrid.put(LiveCell.Instance, 3, 4);
+            expectedGrid.put(LiveCell.Instance, 4, 4);
+            expectedGrid.put(LiveCell.Instance, 5, 4);
+            assertEquals(expectedGrid, newGrid);
+        }
+    }
 
-            assertNotEquals(grid, nextGeneration);
+    @Nested
+    class TestDisplayPopulation {
+
+        @Test
+        public void expectPopulationDisplayed() throws IllegalArgumentException{
+            Grid grid = new Grid(8, 8);
+            grid.put(LiveCell.Instance, 4, 3);
+            grid.put(LiveCell.Instance, 4, 4);
+            grid.put(LiveCell.Instance, 4, 5);
+
+            System.out.println(grid);
+            Grid newGrid = grid.tickPopulation();
+            Grid expectedGrid = new Grid(8, 8);
+            expectedGrid.put(LiveCell.Instance, 3, 4);
+            expectedGrid.put(LiveCell.Instance, 4, 4);
+            expectedGrid.put(LiveCell.Instance, 5, 4);
+
+            System.out.println(expectedGrid.toString());
+            System.out.println(newGrid.toString());
+
+            newGrid = newGrid.tickPopulation();
+            System.out.println(expectedGrid.toString());
+            System.out.println(newGrid.toString());
         }
     }
 }
