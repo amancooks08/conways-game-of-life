@@ -1,11 +1,13 @@
 package main;
 
+import java.util.List;
 import java.util.Random;
+import java.util.Arrays;
 
 public class Grid {
     private Cell[][] cells;
 
-    public Grid(int rows, int columns){
+    public Grid(int rows, int columns) throws IllegalArgumentException{
         if (rows <= 0 || columns <= 0){
             throw new IllegalArgumentException("Rows and Columns should be positive values");
         }
@@ -17,7 +19,7 @@ public class Grid {
         }
     }
 
-    public void generateSeedGeneration(){
+    public void generateSeed(){
         Random rand = new Random();
 
         for (int i = 0; i < this.rows(); i++){
@@ -27,11 +29,52 @@ public class Grid {
         }
     }
 
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(cells);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Grid grid = (Grid) o;
+        return Arrays.deepEquals(this.cells, grid.cells);
+    }
+
     public int rows(){
         return cells.length;
     }
 
     public int columns(){
         return cells[0].length;
+    }
+
+    private void put(Cell cell, int x, int y){
+        cells[x][y] = cell;
+    }
+
+
+    public Grid tickPopulation() {
+        Grid newGrid = new Grid(this.cells.length, this.cells[0].length);
+        for (int x = 0; x < cells.length; x++) {
+            for (int y = 0; y < cells[x].length; y++) {
+                Cell cell = cells[x][y];
+                List<CellAddress> neighbours = new CellAddress(x, y).neighboursFor(this);
+                int liveNeighbourCount = liveNeighboursCountFor(neighbours);
+                Cell newCell = cell.nextGeneration(liveNeighbourCount);
+                newGrid.put(newCell, x, y);
+            }
+        }
+        return newGrid;
+    }
+
+    private int liveNeighboursCountFor(List<CellAddress> neighbours) {
+        int counter = 0;
+        for (CellAddress address : neighbours) {
+            if (cells[address.x][address.y].isAlive()) {
+                counter++;
+            }
+        }
+        return counter;
     }
 }

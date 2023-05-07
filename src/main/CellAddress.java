@@ -19,7 +19,7 @@ public class CellAddress {
     public List<CellAddress> neighboursFor(Grid grid) {
         int lastRowIndex = grid.rows() - 1;
         int lastColumnIndex = grid.columns() - 1;
-        List<CellAddress> neighbours = new ArrayList<CellAddress>();
+        List<CellAddress> neighbours = new ArrayList<>();
         for (int i = x - 1; i <= x + 1; i++) {
             for (int j = y - 1; j <= y + 1; j++) {
                 if (i < 0 || j < 0 || i > lastRowIndex || j > lastColumnIndex || (i == x && j ==y)) {

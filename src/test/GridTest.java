@@ -43,25 +43,35 @@ class GridTest {
     class TestSeedGenerator {
         @Test
         public void expectRandomSeedPopulation(){
-            Grid grid = new Grid(5,6);
             Grid deadGrid = new Grid(5, 6);
+            Grid grid = new Grid(5, 6);
+            grid.generateSeed();
 
-            grid.generateSeedGeneration();
-
-            assertTrue(grid != deadGrid);
+            assertEquals(deadGrid, grid);
         }
 
     }
 
-//    @Nested
-//    class TestTickNewGeneration{
-//
-//        @Test
-//        public void TestIfAllDeadPopulationReproduce(){
-//            Grid grid = new Grid(5, 6);
-//
-//            Grid nextGeneration = grid.tickPopulation();
-//
-//        }
-//    }
+    @Nested
+    class TestTickNewGeneration{
+
+        @Test
+        public void expectDeadPopulationDoNotReproduce(){
+            Grid grid = new Grid(5, 6);
+
+            Grid nextGeneration = grid.tickPopulation();
+
+            assertEquals(grid, nextGeneration);
+        }
+
+        @Test
+        public void expectSeedPopulationToReproduce(){
+            Grid grid = new Grid(5, 6);
+            grid.generateSeed();
+
+            Grid nextGeneration = grid.tickPopulation();
+
+            assertNotEquals(grid, nextGeneration);
+        }
+    }
 }
