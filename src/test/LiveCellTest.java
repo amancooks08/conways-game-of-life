@@ -1,6 +1,7 @@
 package test;
 
 import main.Cell;
+import main.DeadCell;
 import main.LiveCell;
 import org.junit.jupiter.api.Test;
 
@@ -32,5 +33,10 @@ class LiveCellTest {
 
         assertTrue(cell1.isAlive());
         assertTrue(cell2.isAlive());
+    }
+
+    @Test
+    public void expectExceptionForNegativeNeighbours(){
+        assertThrows(IllegalArgumentException.class, () -> LiveCell.Instance.nextGeneration(-2));
     }
 }

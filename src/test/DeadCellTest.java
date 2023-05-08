@@ -25,4 +25,9 @@ class DeadCellTest {
         assertFalse(DeadCell.Instance.nextGeneration(2).isAlive());
         assertFalse(DeadCell.Instance.nextGeneration(4).isAlive());
     }
+
+    @Test
+    public void expectExceptionForNegativeNeighbours(){
+        assertThrows(IllegalArgumentException.class, () -> DeadCell.Instance.nextGeneration(-2));
+    }
 }

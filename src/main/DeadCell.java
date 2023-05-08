@@ -10,7 +10,10 @@ public class DeadCell implements Cell{
         return false;
     }
 
-    public Cell nextGeneration(int aliveNeighbours){
+    public Cell nextGeneration(int aliveNeighbours) throws IllegalArgumentException{
+        if (aliveNeighbours < 0){
+            throw new IllegalArgumentException("Neighbour count can't be negative");
+        }
         if (aliveNeighbours == 3){
             return LiveCell.Instance;
         }
