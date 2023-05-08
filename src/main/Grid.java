@@ -59,18 +59,19 @@ public class Grid {
 
     public Grid tickPopulation() {
         Grid newGrid = new Grid(this.cells.length, this.cells[0].length);
-        for (int x = 0; x < cells.length; x++) {
-            for (int y = 0; y < cells[x].length; y++) {
-                Cell cell = cells[x][y];
-                List<CellAddress> neighbours = new CellAddress(x, y).neighboursFor(this);
+        for (int row = 0; row < cells.length; row++) {
+            for (int column = 0; column < cells[row].length; column++) {
+                Cell cell = cells[row][column];
+                List<CellAddress> neighbours = new CellAddress(row, column).neighboursFor(this);
                 int liveNeighbourCount = liveNeighboursCountFor(neighbours);
                 Cell newCell = cell.nextGeneration(liveNeighbourCount);
-                newGrid.put(newCell, x, y);
+                newGrid.put(newCell, row, column);
             }
         }
         return newGrid;
     }
 
+    // TODO add mocking using spyke
     private int liveNeighboursCountFor(List<CellAddress> neighbours) {
         int counter = 0;
         for (CellAddress address : neighbours) {
@@ -84,9 +85,9 @@ public class Grid {
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();
-        for (int x = 0; x < cells.length; x++) {
-            for (int y = 0; y < cells[x].length; y++) {
-                if (cells[x][y].isAlive()) {
+        for (int row = 0; row < cells.length; row++) {
+            for (int column = 0; column < cells[row].length; column++) {
+                if (cells[row][column].isAlive()) {
                     buffer.append("*");
                 } else {
                     buffer.append("O");

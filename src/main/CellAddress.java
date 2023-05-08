@@ -20,12 +20,12 @@ public class CellAddress {
         int lastRowIndex = grid.rows() - 1;
         int lastColumnIndex = grid.columns() - 1;
         List<CellAddress> neighbours = new ArrayList<>();
-        for (int i = x - 1; i <= x + 1; i++) {
-            for (int j = y - 1; j <= y + 1; j++) {
-                if (i < 0 || j < 0 || i > lastRowIndex || j > lastColumnIndex || (i == x && j ==y)) {
+        for (int row = x - 1; row <= x + 1; row++) {
+            for (int column = y - 1; column <= y + 1; column++) {
+                if (row < 0 || column < 0 || row > lastRowIndex || column > lastColumnIndex || (row == x && column ==y)) {
                     continue;
                 }
-                neighbours.add(new CellAddress(i, j));
+                neighbours.add(new CellAddress(row, column));
             }
         }
         return neighbours;
